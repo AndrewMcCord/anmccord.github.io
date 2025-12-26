@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frappin' Funny Cruises by Brad Wilson</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: #ffcc00;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        nav ul li a:hover {
+            color: #ffcc00;
+        }
+
+        .hero {
+            padding: 4rem 0;
+            background-color: white;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 3rem;
+        }
+
+        .book-cover {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .book-cover:hover {
+            transform: scale(1.03);
+        }
+
+        .book-cover img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .hero-text h1 {
+            font-size: 2.8rem;
+            color: #1a2980;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to right, #ff8a00, #ffcc00);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 138, 0, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 138, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(to right, #1a2980, #26d0ce);
+            box-shadow: 0 4px 15px rgba(26, 41, 128, 0.3);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 6px 20px rgba(26, 41, 128, 0.4);
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #1a2980;
+            font-size: 2.5rem;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, #ff8a00, #ffcc00);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+        }
+
+        .author-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .author-image img {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .author-info {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .author-info h3 {
+            font-size: 2rem;
+            color: #1a2980;
+            margin-bottom: 1rem;
+        }
+
+        .author-info p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .reviews {
+            background-color: #f8f9fa;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .review-card i {
+            color: #ffcc00;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .review-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .reviewer {
+            font-weight: 700;
+            color: #1a2980;
+        }
+
+        .order-form {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #1a2980;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #26d0ce;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-input {
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 0 10px;
+            font-size: 1rem;
+        }
+
+        .order-summary {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .total {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #1a2980;
+            border-top: 2px solid #ddd;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        footer {
+            background: #1a2980;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #ffcc00;
+        }
+
+        .footer-section p {
+            margin-bottom: 1rem;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: #ffcc00;
+            color: #1a2980;
+        }
+
+        .copyright {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .mobile-nav {
+            display: none;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .mobile-nav ul {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .mobile-nav ul li {
+            margin: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-nav ul li a {
+            display: block;
+            padding: 1rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav {
+                display: none;
+                width: 100%;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 2rem;
+                right: 20px;
+            }
+
+            .mobile-nav.active {
+                display: block;
+            }
+
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .order-form {
+                padding: 2rem;
+            }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 2rem;
+            background: #4CAF50;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Main App Component
+        function App() {
+            const [activeSection, setActiveSection] = useState('home');
+            const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+            const [orderNotification, setOrderNotification] = useState(null);
+            const [orderForm, setOrderForm] = useState({
+                name: '',
+                email: '',
+                address: '',
+                city: '',
+                zip: '',
+                quantity: 1
+            });
+
+            const bookPrice = 19.99;
+            const shippingCost = 3.99;
+
+            // Calculate order total
+            const calculateTotal = () => {
+                const subtotal = orderForm.quantity * bookPrice;
+                const total = subtotal + shippingCost;
+                return total.toFixed(2);
+            };
+
+            // Handle form input changes
+            const handleInputChange = (e) => {
+                const { name, value } = e.target;
+                setOrderForm({
+                    ...orderForm,
+                    [name]: value
+                });
+            };
+
+            // Handle quantity changes
+            const handleQuantityChange = (change) => {
+                const newQuantity = Math.max(1, orderForm.quantity + change);
+                setOrderForm({
+                    ...orderForm,
+                    quantity: newQuantity
+                });
+            };
+
+            // Handle form submission
+            const handleSubmitOrder = (e) => {
+                e.preventDefault();
+
+                // Show order confirmation
+                setOrderNotification({
+                    message: `Order placed successfully! ${orderForm.quantity} copy(ies) of "Frappin' Funny Cruises" will be shipped to ${orderForm.name}.`,
+                    type: 'success'
+                });
+
+                // Reset form after submission
+                setOrderForm({
+                    name: '',
+                    email: '',
+                    address: '',
+                    city: '',
+                    zip: '',
+                    quantity: 1
+                });
+
+                // Auto-hide notification after 5 seconds
+                setTimeout(() => {
+                    setOrderNotification(null);
+                }, 5000);
+            };
+
+            // Scroll to section when navigation link is clicked
+            const scrollToSection = (sectionId) => {
+                setActiveSection(sectionId);
+                setMobileMenuOpen(false);
+
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    window.scrollTo({
+                        top: element.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            };
+
+            // Toggle mobile menu
+            const toggleMobileMenu = () => {
+                setMobileMenuOpen(!mobileMenuOpen);
+            };
+
+            // Close mobile menu when clicking outside
+            useEffect(() => {
+                const handleClickOutside = (event) => {
+                    if (mobileMenuOpen && !event.target.closest('nav')) {
+                        setMobileMenuOpen(false);
+                    }
+                };
+
+                document.addEventListener('click', handleClickOutside);
+                return () => {
+                    document.removeEventListener('click', handleClickOutside);
+                };
+            }, [mobileMenuOpen]);
+
+            return (
+                <div>
+                    {/* Header with Navigation */}
+                    <header>
+                        <div className="container">
+                            <div className="header-content">
+                                <div className="logo">
+                                    <i className="fas fa-ship"></i>
+                                    <span>Frappin' Funny Cruises</span>
+                                </div>
+
+                                <button className="mobile-menu-btn" onClick={toggleMobileMenu}>
+                                    <i className={mobileMenuOpen ? "fas fa-times" : "fas fa-bars"}></i>
+                                </button>
+
+                                <nav className={mobileMenuOpen ? "mobile-nav active" : ""}>
+                                    <ul>
+                                        <li><a href="#home" onClick={() => scrollToSection('home')} className={activeSection === 'home' ? 'active' : ''}>Home</a></li>
+                                        <li><a href="#about" onClick={() => scrollToSection('about')} className={activeSection === 'about' ? 'active' : ''}>About the Author</a></li>
+                                        <li><a href="#reviews" onClick={() => scrollToSection('reviews')} className={activeSection === 'reviews' ? 'active' : ''}>Reviews</a></li>
+                                        <li><a href="#order" onClick={() => scrollToSection('order')} className={activeSection === 'order' ? 'active' : ''}>Order Now</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Order Notification */}
+                    {orderNotification && (
+                        <div className="notification">
+                            <i className="fas fa-check-circle"></i>
+                            <span>{orderNotification.message}</span>
+                        </div>
+                    )}
+
+                    {/* Hero Section with Book Cover */}
+                    <section id="home" className="hero">
+                        <div className="container">
+                            <div className="hero-content">
+                                <div className="book-cover">
+                                    <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Frappin' Funny Cruises Book Cover" />
+                                </div>
+                                <div className="hero-text">
+                                    <h1>Frappin' Funny Cruises</h1>
+                                    <p>Embark on a hilarious journey across the seven seas with Brad Wilson's latest masterpiece. This laugh-out-loud collection of cruise ship misadventures will have you in stitches from departure to disembarkation.</p>
+                                    <p>Join bumbling travelers, eccentric crew members, and unforgettable destinations in this side-splitting voyage through the world of cruising.</p>
+                                    <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                                        <button className="btn" onClick={() => scrollToSection('order')}>Order Now</button>
+                                        <button className="btn btn-secondary" onClick={() => scrollToSection('about')}>Meet the Author</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* About the Author Section */}
+                    <section id="about" className="about">
+                        <div className="container">
+                            <h2 className="section-title">About the Author</h2>
+                            <div className="about-content">
+                                <div className="author-image">
+                                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Brad Wilson - Author" />
+                                </div>
+                                <div className="author-info">
+                                    <h3>Brad Wilson</h3>
+                                    <p>Brad Wilson is an award-winning humorist and travel writer with over 20 years of experience documenting his misadventures around the globe. His unique perspective on travel has earned him a loyal following of readers who appreciate his self-deprecating humor and keen observational skills.</p>
+                                    <p>After taking his first cruise in 2005 - a voyage that included getting lost in the ship's laundry room, accidentally attending a timeshare presentation thinking it was a magic show, and mistaking the captain for a bartender - Brad discovered a goldmine of comedic material in the world of cruising.</p>
+                                    <p>When he's not writing or cruising, Brad enjoys teaching humorous writing workshops and performing stand-up comedy at local venues. "Frappin' Funny Cruises" is his fifth book and the culmination of a decade's worth of cruise ship observations.</p>
+                                    <p>Brad lives in coastal South Carolina with his wife, Jayme.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Reviews Section */}
+                    <section id="reviews" className="reviews">
+                        <div className="container">
+                            <h2 className="section-title">What Readers Are Saying</h2>
+                            <div className="reviews-grid">
+                                <div className="review-card">
+                                    <i className="fas fa-quote-left"></i>
+                                    <p className="review-text">"I haven't laughed this hard in years! Brad Wilson perfectly captures the absurdity of cruise ship life. His stories are relatable, hilarious, and oddly insightful."</p>
+                                    <p className="reviewer">- Sarah Johnson, The Travel Times</p>
+                                </div>
+                                <div className="review-card">
+                                    <i className="fas fa-quote-left"></i>
+                                    <p className="review-text">"A masterclass in travel humor. Wilson's sharp wit and keen observations make this a must-read for anyone who's ever been on a cruise or considered taking one."</p>
+                                    <p className="reviewer">- Michael Chen, Comedy Review</p>
+                                </div>
+                                <div className="review-card">
+                                    <i className="fas fa-quote-left"></i>
+                                    <p className="review-text">"I read this book on my last cruise and had to apologize to fellow passengers for laughing out loud by the pool. Worth every penny!"</p>
+                                    <p className="reviewer">- Emily Rodriguez, Avid Cruiser</p>
+                                </div>
+                                <div className="review-card">
+                                    <i className="fas fa-quote-left"></i>
+                                    <p className="review-text">"Brad Wilson does for cruising what David Sedaris does for family holidays. This book is a treasure trove of comedic gems that will resonate with travelers everywhere."</p>
+                                    <p className="reviewer">- David Miller, Literary Digest</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Order Section */}
+                    <section id="order" className="order">
+                        <div className="container">
+                            <h2 className="section-title">Order Your Copy</h2>
+                            <div className="order-form">
+                                <form onSubmit={handleSubmitOrder}>
+                                    <div className="form-row">
+                                        <div className="form-group">
+                                            <label htmlFor="name">Full Name</label>
+                                            <input
+                                                type="text"
+                                                id="name"
+                                                name="name"
+                                                className="form-control"
+                                                value={orderForm.name}
+                                                onChange={handleInputChange}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="email">Email Address</label>
+                                            <input
+                                                type="email"
+                                                id="email"
+                                                name="email"
+                                                className="form-control"
+                                                value={orderForm.email}
+                                                onChange={handleInputChange}
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label htmlFor="address">Shipping Address</label>
+                                        <input
+                                            type="text"
+                                            id="address"
+                                            name="address"
+                                            className="form-control"
+                                            value={orderForm.address}
+                                            onChange={handleInputChange}
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="form-row">
+                                        <div className="form-group">
+                                            <label htmlFor="city">City</label>
+                                            <input
+                                                type="text"
+                                                id="city"
+                                                name="city"
+                                                className="form-control"
+                                                value={orderForm.city}
+                                                onChange={handleInputChange}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="zip">ZIP Code</label>
+                                            <input
+                                                type="text"
+                                                id="zip"
+                                                name="zip"
+                                                className="form-control"
+                                                value={orderForm.zip}
+                                                onChange={handleInputChange}
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Quantity</label>
+                                        <div className="quantity-selector">
+                                            <button type="button" className="quantity-btn" onClick={() => handleQuantityChange(-1)}>-</button>
+                                            <input
+                                                type="text"
+                                                className="quantity-input"
+                                                value={orderForm.quantity}
+                                                readOnly
+                                            />
+                                            <button type="button" className="quantity-btn" onClick={() => handleQuantityChange(1)}>+</button>
+                                        </div>
+                                    </div>
+
+                                    <div className="order-summary">
+                                        <div className="summary-row">
+                                            <span>Price per book:</span>
+                                            <span>${bookPrice.toFixed(2)}</span>
+                                        </div>
+                                        <div className="summary-row">
+                                            <span>Shipping:</span>
+                                            <span>${shippingCost.toFixed(2)}</span>
+                                        </div>
+                                        <div className="summary-row">
+                                            <span>Subtotal ({orderForm.quantity} {orderForm.quantity === 1 ? 'book' : 'books'}):</span>
+                                            <span>${(orderForm.quantity * bookPrice).toFixed(2)}</span>
+                                        </div>
+                                        <div className="summary-row total">
+                                            <span>Total:</span>
+                                            <span>${calculateTotal()}</span>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" className="btn" style={{ width: '100%', marginTop: '1.5rem', fontSize: '1.2rem', padding: '15px' }}>
+                                        <i className="fas fa-shopping-cart"></i> Place Order
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Footer */}
+                    <footer>
+                        <div className="container">
+                            <div className="footer-content">
+                                <div className="footer-section">
+                                    <h3>Frappin' Funny Cruises</h3>
+                                    <p>By Brad Wilson</p>
+                                    <p>Available in paperback, hardcover, and eBook formats</p>
+                                </div>
+                                <div className="footer-section">
+                                    <h3>Connect with Brad</h3>
+                                    <div className="social-icons">
+                                        <a href="#"><i className="fab fa-twitter"></i></a>
+                                        <a href="#"><i className="fab fa-facebook-f"></i></a>
+                                        <a href="#"><i className="fab fa-instagram"></i></a>
+                                        <a href="#"><i className="fab fa-goodreads"></i></a>
+                                    </div>
+                                </div>
+                                <div className="footer-section">
+                                    <h3>Publisher Information</h3>
+                                    <p>Oceanic Press</p>
+                                    <p>123 Harbor Drive</p>
+                                    <p>Portland, ME 04101</p>
+                                </div>
+                            </div>
+                            <div className="copyright">
+                                <p>&copy; {new Date().getFullYear()} Frappin' Funny Cruises by Brad Wilson. All rights reserved.</p>
+                                <p>Website created for promotional purposes.</p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        // Render the App
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+
+</html>
